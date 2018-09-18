@@ -3,12 +3,9 @@ title: "2018_USDA Abiotic Rearing Conditions"
 author: "JT Brown"
 date: "June 13, 2018"
 output: html_document
+editor_options: 
+  chunk_output_type: inline
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 
 ```{r}
 ##Call Data
@@ -21,7 +18,6 @@ library(ez)
 library(lsr)
 library(dplyr)
 library(tidyr)
-library(googleVis)
 library(MASS)
 library(doBy)
 library(plyr)
@@ -50,16 +46,19 @@ data=gather(data,hobo_incubator,temperature, usdahobo_uf12temp:ufhobo_usda16temp
 
 #remove NAs
 data=subset(data,hour!="NA")
+data=subset(data,temperature!="NA")
 
 str(data)
 ```
 
+
 ```{r}
-ggplot(data=data,aes(x=hour,y=temperature,color=place))+
+data$hobo_incubator<-as.factor(as.character(data$hobo_incubator))
+ggplot(data=data,aes(x=hour,y=temperature,group=hobo_incubator,color=hobo_incubator))+
   geom_point()+
-  geom_line()+
-  facet_wrap(~hobo_incubator)+
+  geom_smooth(method="loess")+
   theme_classic()+
+  facet_wrap(~place)+
   ggtitle("Incubator Temperatures")+
   ylab("Temperature")+xlab("Hour")
 ```
