@@ -1,0 +1,51 @@
+---
+title: "Abiotic Conditions"
+author: "Brown, J.T."
+date: "September 20, 2018"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl)
+library(ggplot2)
+library(nlme)
+library(lme4)
+library(lmerTest)
+library(ez)
+library(lsr)
+library(dplyr)
+library(tidyr)
+library(MASS)
+library(doBy)
+library(plyr)
+```
+
+
+```{r}
+##PC
+data=read_excel("/Users/jbrown/Documents/GitHub/Nutrition and Diapause/Rearing/Data/hobo temps_full.xlsx",sheet = "Sheet1")
+str(data)
+
+##MAC
+## reading in the data and looking at its structure
+#setwd("/Users/JamesB/Google Drive/Graduate School/Self_JamesTBrown/GitHub/Nutrition and Diapause/FreezeDry/Data")
+#data=read_excel("/Users/JamesB/Google Drive/Graduate School/Self_JamesTBrown/GitHub/FreezeDry/Data/2017_Lyophollization Validation.xlsx", sheet = "Sheet1")
+
+
+
+data$treat=as.factor(data$treat)
+data$date=as.POSIXct(data$date)
+str(data)
+```
+
+```{r}
+ggplot(data,aes(x=date,y=temp))+
+  geom_point(aes(color=treat))+
+  ggtitle("Hobo Abiotic Conditions")
+```
