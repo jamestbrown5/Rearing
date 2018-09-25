@@ -5,6 +5,7 @@ date: "September 20, 2018"
 output: html_document
 editor_options: 
   chunk_output_type: console
+chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +30,7 @@ library(plyr)
 
 ```{r}
 ##PC
-data=read_excel("/Users/jbrown/Documents/GitHub/Nutrition and Diapause/Rearing/Data/hobo temps_full.xlsx",sheet = "Sheet1")
+data=read_excel("/Users/jbrown/Documents/GitHub/Rearing/Data/hobo temps_full.xlsx",sheet = "Sheet1")
 str(data)
 
 ##MAC

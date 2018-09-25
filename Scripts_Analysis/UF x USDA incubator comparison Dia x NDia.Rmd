@@ -24,7 +24,7 @@ library(plyr)
 
 
 ##PC
-  data=read_excel("/Users/jbrown/Documents/GitHub/Nutrition and Diapause/Rearing/Data/20180613_Larval LH Incubator Temp Comparison.xlsx",sheet = "Sheet1")
+  data=read_excel("/Users/jbrown/Documents/GitHub/Rearing/Data/20180613_Larval LH Incubator Temp Comparison.xlsx",sheet = "Sheet1")
 
 ##MAC
 ## reading in the data and looking at its structure
