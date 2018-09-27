@@ -25,6 +25,7 @@ library(tidyr)
 library(MASS)
 library(doBy)
 library(plyr)
+library(stringr)
 ```
 
 
@@ -41,12 +42,32 @@ str(data)
 
 
 data$treat=as.factor(data$treat)
-data$date=as.POSIXct(data$date)
+data$time=substr(data$date,12,19)
+data$date=as.Date(data$date)
 str(data)
 ```
 
 ```{r}
+data=data[grep(":00:00", data$time), ]
+head(data)
+data=subset(data,temp<=26)
+data=subset(data,temp>=20)
+#data=subset(data,treat=="ND")
+data=subset(data,date>="2018-01-01 00:00:00")
 ggplot(data,aes(x=date,y=temp))+
   geom_point(aes(color=treat))+
   ggtitle("Hobo Abiotic Conditions")
+
+ggplot(data=data,aes(x=date,y=temp,group=treat,color=treat))+
+  stat_summary(aes(y = temp), fun.y=mean, geom="line")+
+  stat_summary(fun.data=mean_se, geom="errorbar", width=2) +
+  theme_classic()+
+  ggtitle("Abiotic hobo conditions")+
+  ylab("Date")+xlab("Temperature")
+
+
+##Are the conditions in long day and short day significantly different?
+mod=aov(temp~date,data=data)
+plot(mod)
+summary(mod)
 ```
